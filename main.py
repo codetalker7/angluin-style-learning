@@ -1,4 +1,5 @@
 from typing import final
+import json
 from automata.fa.dfa import DFA
 import math
 
@@ -8,19 +9,19 @@ primes_list = list(llist[:len(llist) - 1].split())
 
 # n represents the number of states in the DFA
 n = 3
-upper_bound = 1 << n
+upper_bound = (1 << n) - 1
 
 # defining the DFA A
 A = DFA(
-    states={'q0', 'q1', 'q2'},
+    states={'0', '1', '2'},
     input_symbols={'0', '1'},
     transitions={
-        'q0': {'0': 'q0', '1': 'q1'},
-        'q1': {'0': 'q0', '1': 'q2'},
-        'q2': {'0': 'q2', '1': 'q1'}
+        '0': {'0': '1', '1': '0'},
+        '1': {'0': '1', '1': '2'},
+        '2': {'0': '0', '1': '0'}
     },
-    initial_state='q0',
-    final_states={'q1'}
+    initial_state='0',
+    final_states={'0'}
 )
 
 # getting the required vector of size n + 1
@@ -39,8 +40,14 @@ for i in range(0 , n):
                 count = count + 1
         ans_vector.append(count)
 
-# printing the final answer
-print(ans_vector)
+# printing the transitions in the DFA
+print("transitions:")
+for i in range(0 , n):
+    print("\t" + str(i) + ": " + str(A.transitions[str(i)]))
+print("initial state: " + A.initial_state)
+print("final states: " + str(A.final_states))
+print("Answer vector: " + str(ans_vector))
+print("----------x----------x----------")
 
 
 
