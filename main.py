@@ -9,19 +9,20 @@ primes_list = list(llist[:len(llist) - 1].split())
 
 # n represents the number of states in the DFA
 n = 3
-upper_bound = (1 << n) - 1
+# strings of length atmost 2*n
+upper_bound = (1 << (2*n)) - 1
 
 # defining the DFA A
 A = DFA(
     states={'0', '1', '2'},
     input_symbols={'0', '1'},
     transitions={
-        '0': {'0': '1', '1': '0'},
-        '1': {'0': '1', '1': '2'},
+        '0': {'0': '0', '1': '1'},
+        '1': {'0': '2', '1': '1'},
         '2': {'0': '0', '1': '0'}
     },
     initial_state='0',
-    final_states={'0'}
+    final_states={'1'}
 )
 
 # getting the required vector of size n + 1
@@ -38,6 +39,10 @@ for i in range(0 , n):
             bin_string = bin(k)[2:]
             if (A.accepts_input(bin_string)):
                 count = count + 1
+            while(len(bin_string) < 2*n):
+                bin_string = '0' + bin_string
+                if (A.accepts_input(bin_string)):
+                    count = count + 1
         ans_vector.append(count)
 
 # printing the transitions in the DFA
