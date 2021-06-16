@@ -1,5 +1,9 @@
 from automata.fa.dfa import DFA
+import json
 import answer_vector
+
+def pretty_print(dict):
+    print (json.dumps(dict, indent=2, default=str))
 
 def all_one_dfa(n, minimal_only=False, count=10, init_state=None, final_state=None):
     """
@@ -15,6 +19,9 @@ def all_one_dfa(n, minimal_only=False, count=10, init_state=None, final_state=No
     """
     # total count
     total_count = 0
+
+    # dictionary of the frequencies of vectors
+    freq_vectors = {}
 
     # creating the set of states
     states = []
@@ -75,11 +82,15 @@ def all_one_dfa(n, minimal_only=False, count=10, init_state=None, final_state=No
                                 initial_state = initial_state,
                                 final_states = final_states
                             )
-                            print(answer_vector.get_vector(A,n))
+                            v = str(answer_vector.get_vector(A, n))
+                            if v in freq_vectors.keys():
+                                freq_vectors[v] = freq_vectors[v] + 1
+                            else: 
+                                freq_vectors[v] = 1
                             if (total_count == count):
-                                exit(1)
-
-all_one_dfa(3, minimal_only=False, count=10000, init_state=0)
-
+                                # printing the dictionary
+                                pretty_print(freq_vectors)
+                                return
     
-
+    # printing the dictionary
+    pretty_print(freq_vectors)

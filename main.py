@@ -1,21 +1,11 @@
 from automata.fa.dfa import DFA
 import answer_vector
+import all_one_dfa
 
-# n represents the number of states in the DFA
-n = 3
+# iterating over all n state DFAs
+# all_one_dfa.all_one_dfa(3, minimal_only=False, count=15000)
 
-# defining the DFA A
-A = DFA(
-    states={'0', '1', '2'},
-    input_symbols={'0', '1'},
-    transitions={
-        '0': {'0': '1', '1': '1'},
-        '1': {'0': '0', '1': '2'},
-        '2': {'0': '1', '1': '1'}
-    },
-    initial_state='1',
-    final_states={'2'}
-)
-A = [(0 , 0)]
-print(A[len(A) - 1])
+# n state DFAs with initial state 0
+# all_one_dfa.all_one_dfa(3, minimal_only=False, count=10000, init_state=0)
 
+all_one_dfa.all_one_dfa(3, minimal_only=False, count=10000, init_state=0)

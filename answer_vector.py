@@ -21,7 +21,7 @@ def get_vector(A, n):
     
 
     # getting the required vector
-    ans_vector = []
+    ans_vector = ()
 
     # loop through each of the n primes in the list
     for i in range(0 , n):
@@ -39,7 +39,7 @@ def get_vector(A, n):
                     bin_string = '0' + bin_string
                     if (A.accepts_input(bin_string)):
                         count = count + 1
-            ans_vector.append(count)
+            ans_vector = ans_vector + (count,)
 
     return ans_vector
 
