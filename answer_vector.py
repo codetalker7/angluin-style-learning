@@ -52,8 +52,7 @@ def print_dfa(A, n):
     # printing the transitions in the DFA
     print("number of states: " + str(n))
     print("transitions:")
-    for i in range(0 , n):
-        print("\t" + str(i) + ": " + str(A.transitions[str(i)]))
-    print("initial state: " + A.initial_state)
+    print (json.dumps(A.transitions, indent=2, default=str))
+    print("initial state: " + str(A.initial_state))
     print("final states: " + str(A.final_states))
 
