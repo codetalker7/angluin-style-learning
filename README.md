@@ -1,5 +1,16 @@
 # angluin-style-learning
-The `primes.py` file is used to generate the first `N` primes. The `main.py` file does the main job: given a DFA with `N` states, it computes a vector whose coordinates are as follows: the first coordinate is `N`. The subsequent coordinates are the cardinalities of the intersection of the language of the DFA with the languages corresponding to each remainder modulo each prime, till the first `N` primes. Also, we only consider binary strings of length atmost `2N`. As of now, the input DFA and `N` are both hardcoded into the `main.py` file, but that can be easily changed.
+The `primes.py` file is used to generate the first `N` primes. The module 
+`answer_vector.py` contains two methods: `get_vector`, which, given an 
+input DFA `A` along with its number of states `n`, computes its answer 
+vector. The second method, `print_dfa`, simply prints the DFA in a neat 
+form. 
+
+The module `all_one_dfa.py` contains a method `all_one_dfa` which is used 
+to iterate over a list of DFAs and make a dictionary consisting of possible
+answer vectors along with their frequencies. 
+
+# A few results
+As of now, a few (not all complete) results are contained in the four text files.
 
 # How to set up the virtual environment?
 Just use `pipenv` to set up the virtual environment using the given configuration files. We only use the [automata-lib](https://github.com/caleb531/automata) library along with other standard libraries.
