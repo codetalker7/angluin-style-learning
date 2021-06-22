@@ -87,6 +87,11 @@ def all_one_dfa(n, count=None, init_state=None, final_state=None):
                                 freq_vectors[v] = freq_vectors[v] + 1
                             else: 
                                 freq_vectors[v] = 1
+                            ##For verbosity, prefer the following instead of the previous.
+                            #if v in freq_vectors.keys():
+                            #    freq_vectors[v] = freq_vectors[v] + " ::: " + "(" + str(A.transitions) + "F:" + str(A.final_states) + ")"
+                            #else: 
+                            #    freq_vectors[v] = "(" + str(A.transitions) + "F:" + str(A.final_states) + ")"
                             if (count != None and total_count == count):
                                 # printing the dictionary
                                 pretty_print(freq_vectors)

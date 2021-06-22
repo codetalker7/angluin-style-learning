@@ -17,7 +17,7 @@ def get_vector(A, n):
     """
     # strings of length atmost 2*n - 2
     max_length = 2*n - 2
-    upper_bound = (1 << max_length) - 1
+    upper_bound = (1 << (max_length+1)) - 1
     
 
     # getting the required vector
@@ -31,14 +31,14 @@ def get_vector(A, n):
             # loop starts at j, goes till upper bound, takes p steps a time
             count = 0
             for k in range(j , upper_bound + 1 , p):
-                bin_string = bin(k)[2:]
+                bin_string = bin(k)[3:]
                 if (A.accepts_input(bin_string)):
                     count = count + 1
                 # also check strings starting with a 0
-                while(len(bin_string) < max_length):
-                    bin_string = '0' + bin_string
-                    if (A.accepts_input(bin_string)):
-                        count = count + 1
+                #while(len(bin_string) < max_length):
+                #    bin_string = '0' + bin_string
+                #    if (A.accepts_input(bin_string)):
+                #        count = count + 1
             ans_vector = ans_vector + (count,)
 
     return ans_vector
