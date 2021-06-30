@@ -16,7 +16,7 @@ def get_vector(A, n):
     p_i is the ith prime number.
     """
     # strings of length atmost 2*n - 2
-    max_length = 2*n - 2
+    max_length = 2*n
     upper_bound = (1 << (max_length+1)) - 1
     
 
@@ -32,7 +32,7 @@ def get_vector(A, n):
             count = 0
             for k in range(j , upper_bound + 1 , p):
                 bin_string = bin(k)[3:]
-                if (A.accepts_input(bin_string)):
+                if (A.accepts_input(bin_string) and k != 0):
                     count = count + 1
                 # also check strings starting with a 0
                 #while(len(bin_string) < max_length):
