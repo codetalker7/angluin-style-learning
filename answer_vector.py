@@ -16,7 +16,7 @@ def get_vector(A, n):
     p_i is the ith prime number.
     """
     # strings of length atmost 2*n - 2
-    max_length = 2*n - 2
+    max_length = 2*n
     upper_bound = (1 << (max_length+1)) - 1
     
 

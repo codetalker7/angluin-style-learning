@@ -5,10 +5,6 @@ import answer_vector
 def pretty_print(dict):
     print (json.dumps(dict, indent=2, default=str))
 
-# temporary code begins
-vec = (16, 0, 5, 5, 6, 3, 3, 3, 4, 3, 2, 3, 2, 2, 2, 3, 2)
-# temporary code ends
-
 def all_one_dfa(n, count=None, init_state=None, final_state=None, minimalOnly=False):
     """
         n is the number of states in the DFAs. This 
@@ -92,13 +88,6 @@ def all_one_dfa(n, count=None, init_state=None, final_state=None, minimalOnly=Fa
                                 continue
                             
                             vec1 = answer_vector.get_vector(A, n)
-                            
-                            # temporary code begins
-                            if (vec == vec1):
-                                answer_vector.print_dfa(A, n)
-                                print("")
-                            # temporary code ends
-
                             v = str(vec1)
                             if v in freq_vectors.keys():
                                 freq_vectors[v] = freq_vectors[v] + 1
