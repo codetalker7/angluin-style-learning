@@ -31,6 +31,9 @@ def get_vector(A, n):
             # loop starts at j, goes till upper bound, takes p steps a time
             count = 0
             for k in range(j , upper_bound + 1 , p):
+                # skip k = 0 to avoid checking empty string twice
+                if (k == 0):
+                    continue
                 bin_string = bin(k)[3:]
                 if (A.accepts_input(bin_string)):
                     count = count + 1

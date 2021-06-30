@@ -25,4 +25,4 @@ A = DFA(
     initial_state='0',
     final_states={'1'}
 )
-print(answer_vector.get_vector(A, 3))
+all_one_dfa.all_one_dfa(4, init_state=0, minimalOnly=True)
