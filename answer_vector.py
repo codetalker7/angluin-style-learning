@@ -8,23 +8,30 @@ primes_file = open("primes.txt" , "r")
 llist = primes_file.read()
 primes_list = list(llist[:len(llist) - 1].split())
 
-def get_vector(A, n):
+def get_vector(A, n, max_length=None, no_of_primes=None):
     """
     Input is a DFA A and a positive integer n, which 
     is equal to the number of states of A. Output is 
     a list of size 1 + p_1 + p_2 + ... + p_n, where 
-    p_i is the ith prime number.
+    p_i is the ith prime number. max_length is the 
+    maximum length of strings you want to check.
     """
-    # strings of length atmost 2*n - 2
-    max_length = 2*n
+
+    if (max_length == None):
+        # strings of length atmost 2*n
+        max_length = 2*n
+    # setting upper bound
     upper_bound = (1 << (max_length+1)) - 1
-    
+
+    # setting no_of_primes if it is None
+    if (no_of_primes == None):
+        no_of_primes = n
 
     # getting the required vector
     ans_vector = ()
 
     # loop through each of the n primes in the list
-    for i in range(0 , n):
+    for i in range(0 , no_of_primes):
         p = int(primes_list[i])
         for j in range(0 , p):
             # look at numbers which are j mod p
