@@ -6,6 +6,7 @@
 
 from automata.fa.dfa import DFA
 import answer_vector
+import new_answer_vector
 import all_one_dfa
 
 # iterating over all n state DFAs

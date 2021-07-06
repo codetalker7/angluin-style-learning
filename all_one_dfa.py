@@ -1,6 +1,7 @@
 from automata.fa.dfa import DFA
 import json
 import answer_vector
+import new_answer_vector
 
 def pretty_print(dict):
     print (json.dumps(dict, indent=2, default=str))
@@ -87,7 +88,7 @@ def all_one_dfa(n, count=None, init_state=None, final_state=None, minimalOnly=Fa
                             if (minimalOnly and len(A.minify().states) < n):
                                 continue
                             
-                            vec1 = answer_vector.get_vector(A, n)
+                            vec1 = new_answer_vector.get_vector(A, n)
                             v = str(vec1)
                             if v in freq_vectors.keys():
                                 freq_vectors[v] = freq_vectors[v] + 1
