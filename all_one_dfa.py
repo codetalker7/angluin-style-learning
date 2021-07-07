@@ -6,7 +6,7 @@ import new_answer_vector
 def pretty_print(dict):
     print (json.dumps(dict, indent=2, default=str))
 
-def all_one_dfa(n, count=None, init_state=None, final_state=None, minimalOnly=False):
+def all_one_dfa(n, count=None, init_state=None, final_state=None, minimalOnly=False, max_length=None, no_of_primes=None):
     """
         n is the number of states in the DFAs. This 
         method prints a list of all possible answer 
@@ -88,7 +88,7 @@ def all_one_dfa(n, count=None, init_state=None, final_state=None, minimalOnly=Fa
                             if (minimalOnly and len(A.minify().states) < n):
                                 continue
                             
-                            vec1 = new_answer_vector.get_vector(A, n)
+                            vec1 = new_answer_vector.get_vector(A, n, max_length=max_length, no_of_primes=no_of_primes)
                             v = str(vec1)
                             if v in freq_vectors.keys():
                                 freq_vectors[v] = freq_vectors[v] + 1

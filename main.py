@@ -26,4 +26,4 @@ A = DFA(
     initial_state='0',
     final_states={'1'}
 )
-all_one_dfa.all_one_dfa(4, init_state=0, minimalOnly=True)
+all_one_dfa.all_one_dfa(3, init_state=0, minimalOnly=True, no_of_primes=4)
