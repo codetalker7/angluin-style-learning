@@ -6,7 +6,7 @@ import new_answer_vector
 def pretty_print(dict):
     print (json.dumps(dict, indent=2, default=str))
 
-def all_one_dfa(n, count=None, init_state=None, final_state=None, minimalOnly=False, max_length=None, no_of_primes=None):
+def all_one_dfa(n, count=None, init_state=None, final_state=None, minimalOnly=False, max_length=None, no_of_primes=None, vec=None):
     """
         n is the number of states in the DFAs. This 
         method prints a list of all possible answer 
@@ -94,15 +94,22 @@ def all_one_dfa(n, count=None, init_state=None, final_state=None, minimalOnly=Fa
                                 freq_vectors[v] = freq_vectors[v] + 1
                             else: 
                                 freq_vectors[v] = 1
+
+                            # printing the DFA if its vector matches vec
+                            if (vec != None and vec1 == vec):
+                                answer_vector.print_dfa(A, n)
+                                print("-----x-----x-----")
+
                             ##For verbosity, prefer the following instead of the previous.
                             #if v in freq_vectors.keys():
                             #    freq_vectors[v] = freq_vectors[v] + " ::: " + "(" + str(A.transitions) + "F:" + str(A.final_states) + ")"
                             #else: 
                             #    freq_vectors[v] = "(" + str(A.transitions) + "F:" + str(A.final_states) + ")"
-                            if (count != None and total_count == count):
+                            if (count != None and total_count == count and vec == None):
                                 # printing the dictionary
                                 pretty_print(freq_vectors)
                                 return
     
-    # printing the dictionary
-    pretty_print(freq_vectors)
+    # printing the dictionary if vec is None
+    if (vec == None):
+        pretty_print(freq_vectors)
