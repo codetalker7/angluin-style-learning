@@ -7,7 +7,7 @@ import all_one_dfa
 # all_one_dfa.all_one_dfa(3, count=15000)
 
 # n state DFAs with initial state 0
-all_one_dfa.all_one_dfa(4, count=50000000, init_state=0,minimalOnly=True, no_of_primes=5)
+all_one_dfa.all_one_dfa(4, count=50000000, init_state=0,minimalOnly=True, no_of_primes=5,max_length=6)
 
 #A = DFA(
 #    states={'0', '1', '2'},
