@@ -247,6 +247,250 @@ print(new_answer_vector.get_vector(A, 3, max_length=5, no_of_primes=4) == new_an
     counter examples for data:
     states = 4
     primes = 4
+    max_length = 8 (2n)
+'''
+# counterexample1 for 2n
+# the example below does not seem to be periodic. The vectors
+# are equal for max_lengths 1,2,6,8,12,13,14,18
+'''
+A = DFA(
+    states={'0', '1', '2', '3'},
+    input_symbols={'0', '1'},
+    transitions={
+        '0': {'0': '2', '1': '0'},
+        '1': {'0': '2', '1': '0'},
+        '2': {'0': '3', '1': '3'},
+        '3': {'0': '2', '1': '1'},
+    },
+    initial_state='0',
+    final_states={'1'}
+)
+B = DFA(
+    states={'0', '1', '2', '3'},
+    input_symbols={'0', '1'},
+    transitions={
+        '0': {'0': '2', '1': '2'},
+        '1': {'0': '2', '1': '3'},
+        '2': {'0': '2', '1': '3'},
+        '3': {'0': '2', '1': '1'},
+    },
+    initial_state='0',
+    final_states={'1'}
+)
+# to see whether these DFAs are different, see if their 
+# answer vectors are different for different primes
+print(new_answer_vector.get_vector(A, 4, max_length=8, no_of_primes=5))
+print(new_answer_vector.get_vector(B, 4, max_length=8, no_of_primes=5))
+print(
+    new_answer_vector.get_vector(A, 4, max_length=8, no_of_primes=4) 
+    == 
+    new_answer_vector.get_vector(B, 4, max_length=8, no_of_primes=4))
+'''
+
+# counterexample2 for 2n
+# the example below is not periodic. However,
+# the vectors are same for max_lengths 1,2,6,8,12,13,14,18,
+# which is the same as above
+'''
+A = DFA(
+    states={'0', '1', '2', '3'},
+    input_symbols={'0', '1'},
+    transitions={
+        '0': {'0': '2', '1': '0'},
+        '1': {'0': '3', '1': '3'},
+        '2': {'0': '3', '1': '3'},
+        '3': {'0': '1', '1': '0'},
+    },
+    initial_state='0',
+    final_states={'1'}
+)
+B = DFA(
+    states={'0', '1', '2', '3'},
+    input_symbols={'0', '1'},
+    transitions={
+        '0': {'0': '2', '1': '2'},
+        '1': {'0': '2', '1': '3'},
+        '2': {'0': '2', '1': '3'},
+        '3': {'0': '1', '1': '2'},
+    },
+    initial_state='0',
+    final_states={'1'}
+)
+# to see whether these DFAs are different, see if their 
+# answer vectors are different for different primes
+print(new_answer_vector.get_vector(A, 4, max_length=8, no_of_primes=5))
+print(new_answer_vector.get_vector(B, 4, max_length=8, no_of_primes=5))
+print(
+    new_answer_vector.get_vector(A, 4, max_length=8, no_of_primes=5) 
+    == 
+    new_answer_vector.get_vector(B, 4, max_length=8, no_of_primes=5))
+'''
+
+# counterexample3 for 2n
+# this one is not periodic either. The max_lengths for
+# which the vectors are equal are 1,2,3,4,8,12,16
+'''
+A = DFA(
+    states={'0', '1', '2', '3'},
+    input_symbols={'0', '1'},
+    transitions={
+        '0': {'0': '2', '1': '2'},
+        '1': {'0': '2', '1': '3'},
+        '2': {'0': '1', '1': '2'},
+        '3': {'0': '0', '1': '2'},
+    },
+    initial_state='0',
+    final_states={'1'}
+)
+B = DFA(
+    states={'0', '1', '2', '3'},
+    input_symbols={'0', '1'},
+    transitions={
+        '0': {'0': '2', '1': '2'},
+        '1': {'0': '3', '1': '0'},
+        '2': {'0': '1', '1': '2'},
+        '3': {'0': '1', '1': '0'},
+    },
+    initial_state='0',
+    final_states={'1'}
+)
+# to see whether these DFAs are different, see if their 
+# answer vectors are different for different primes
+print(new_answer_vector.get_vector(A, 4, max_length=8, no_of_primes=5))
+print(new_answer_vector.get_vector(B, 4, max_length=8, no_of_primes=5))
+print(
+    new_answer_vector.get_vector(A, 4, max_length=8, no_of_primes=5) 
+    == 
+    new_answer_vector.get_vector(B, 4, max_length=8, no_of_primes=5))
+'''
+
+# counterexample4 for 2n
+# this one is not periodic either. The max_lengths for which
+# the vectors are equal are 1,2,6,8,12,13,14,18
+'''
+A = DFA(
+    states={'0', '1', '2', '3'},
+    input_symbols={'0', '1'},
+    transitions={
+        '0': {'0': '2', '1': '3'},
+        '1': {'0': '0', '1': '0'},
+        '2': {'0': '0', '1': '0'},
+        '3': {'0': '1', '1': '3'},
+    },
+    initial_state='0',
+    final_states={'1'}
+)
+B = DFA(
+    states={'0', '1', '2', '3'},
+    input_symbols={'0', '1'},
+    transitions={
+        '0': {'0': '2', '1': '3'},
+        '1': {'0': '3', '1': '0'},
+        '2': {'0': '3', '1': '0'},
+        '3': {'0': '1', '1': '0'},
+    },
+    initial_state='0',
+    final_states={'1'}
+)
+# to see whether these DFAs are different, see if their 
+# answer vectors are different for different primes
+print(new_answer_vector.get_vector(A, 4, max_length=8, no_of_primes=5))
+print(new_answer_vector.get_vector(B, 4, max_length=8, no_of_primes=5))
+print(
+    new_answer_vector.get_vector(A, 4, max_length=8, no_of_primes=5) 
+    == 
+    new_answer_vector.get_vector(B, 4, max_length=8, no_of_primes=5))
+'''
+
+# counterexample5 for 2n
+# this one is not periodic either. The max_lengths for which
+# the vectors are equal are again 1,2,6,8,12,13,14,18
+'''
+A = DFA(
+    states={'0', '1', '2', '3'},
+    input_symbols={'0', '1'},
+    transitions={
+        '0': {'0': '2', '1': '3'},
+        '1': {'0': '2', '1': '1'},
+        '2': {'0': '0', '1': '0'},
+        '3': {'0': '2', '1': '1'},
+    },
+    initial_state='0',
+    final_states={'1'}
+)
+B = DFA(
+    states={'0', '1', '2', '3'},
+    input_symbols={'0', '1'},
+    transitions={
+        '0': {'0': '2', '1': '3'},
+        '1': {'0': '2', '1': '3'},
+        '2': {'0': '3', '1': '0'},
+        '3': {'0': '2', '1': '1'},
+    },
+    initial_state='0',
+    final_states={'1'}
+)
+# to see whether these DFAs are different, see if their 
+# answer vectors are different for different primes
+print(new_answer_vector.get_vector(A, 4, max_length=8, no_of_primes=5))
+print(new_answer_vector.get_vector(B, 4, max_length=8, no_of_primes=5))
+print(
+    new_answer_vector.get_vector(A, 4, max_length=8, no_of_primes=5) 
+    == 
+    new_answer_vector.get_vector(B, 4, max_length=8, no_of_primes=5))
+'''
+
+'''
+    counter examples for data:
+    states = 4
+    primes = 4
+    max_length = 6 (2n - 2)
+'''
+# counterexample1 for 2n - 2
+# this example is not periodic. Some of the max_lengths
+# for which the vectors are equal are 1,2,6. (Unlike in the case of
+# 2n, where the vectors were equal for more values)
+'''
+A = DFA(
+    states={'0', '1', '2', '3'},
+    input_symbols={'0', '1'},
+    transitions={
+        '0': {'0': '2', '1': '0'},
+        '1': {'0': '1', '1': '2'},
+        '2': {'0': '3', '1': '0'},
+        '3': {'0': '1', '1': '0'},
+    },
+    initial_state='0',
+    final_states={'1'}
+)
+B = DFA(
+    states={'0', '1', '2', '3'},
+    input_symbols={'0', '1'},
+    transitions={
+        '0': {'0': '2', '1': '2'},
+        '1': {'0': '0', '1': '2'},
+        '2': {'0': '3', '1': '2'},
+        '3': {'0': '1', '1': '2'},
+    },
+    initial_state='0',
+    final_states={'1'}
+)
+# to see whether these DFAs are different, see if their 
+# answer vectors are different for different primes
+print(new_answer_vector.get_vector(A, 4, max_length=6, no_of_primes=5))
+print(new_answer_vector.get_vector(B, 4, max_length=6, no_of_primes=5))
+print(
+    new_answer_vector.get_vector(A, 4, max_length=6, no_of_primes=5) 
+    == 
+    new_answer_vector.get_vector(B, 4, max_length=6, no_of_primes=5))
+'''
+
+# 33
+
+'''
+    counter examples for data:
+    states = 4
+    primes = 4
     max_length = 9 (2n + 1) 
 '''
 # counterexample1 for 2n+1
@@ -260,7 +504,7 @@ A = DFA(
         '1': {'0': '2', '1': '3'},
         '2': {'0': '3', '1': '0'},
         '3': {'0': '2', '1': '1'}
-    },
+        },
     initial_state='0',
     final_states={'1'}
 )
