@@ -1,0 +1,192 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+%\documentclass[12pt,
+%    driverfallback=dvipdfm,
+% %   openright,
+% 	openany,
+%    a4paper,
+% %   parskip=half,   
+%    toc=bibliography,
+%    twoside,
+%    numbers=noenddot]{article}              % Book class in 11 points
+
+\documentclass[english,course]{lecture}
+%\usepackage[usenames,dvipsnames,showerrors,usenames,svgnames]{xcolor}
+    
+\usepackage{algorithmic}
+%\usepackage{fullpage}
+%\usepackage[hidelinks,breaklinks]{hyperref}
+%\usepackage[xcolor,makeidx=compatibility,quotation,notion]{knowledge}
+
+\usepackage{float}
+\floatstyle{ruled}
+\newfloat{problem}{thp}{lop}
+\floatname{problem}{Problem}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage[rightcaption]{sidecap}
+ 
+%%% PACKAGES
+\usepackage{tikz}
+\usetikzlibrary{angles}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+
+
+\usepackage[english]{babel}
+\usepackage{amsmath, amsthm, amssymb}
+%\usepackage{tikz-cd}
+%\usetikzlibrary{shapes,arrows,intersections}
+%\usetikzlibrary{matrix,fit,calc,trees,positioning,arrows,chains,shapes.geometric,shapes,angles,quotes}
+
+%\usepackage{algorithm,algorithmic}% http://ctan.org/pkg/algorithms
+
+\usepackage{mdframed} 
+\usepackage{xspace}
+
+\usepackage[capitalize]{cleveref}
+\usepackage{todonotes}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+%
+% First, provide some data about this document
+\title{Automata and Non-commutative polynomials}
+%\subtitle{Empirical Risk Minimization (ERM)}
+%\shorttitle{ERM} % For headers; if undefined, the usual title will be used
+%\ccode{Code 7.45} % Most of these data are not compulsory
+%\subject{Subject of the Talk}
+%\author{Sreejith A V}
+%\spemail{satya@iitgoa.ac.in}
+%\email{sreejithav@iitgoa.ac.in}
+%\speaker{Satyanath Bhat}
+%\date{12}{07}{2021}
+%\dateend{12}{07}{2021}
+%\conference{Lecture hall 7}
+%\place{IIT Goa}
+%\flag{An extra line if you need it.}
+%\attn{Place anything here to gather your readers' attention. This could be a warning, a disclaimer, a license, or, more likely, some helpful suggestions for your readers.}
+%\morelink{vhbelvadi.com}
+
+%\input{macros.tex}
+\newcommand{\Mxy}[1]{[M_x,M_y](#1)}
+\newcommand{\degree}[1]{\deg(#1)}
+\newcommand{\field}{\mathbb{F}}
+\newcommand{\poly}[1]{\emph{poly}(#1)}
+\newcommand{\Prob}[1]{\ensuremath{\mathtt{Prob}(#1)}}
+\newcommand{\defs}{::=}
+\newcommand{\wa}[1]{\mathcal{W}#1}
+
+\begin{document}
+%\maketitle
+\section{Finite fields}
+
+\section{Non-commutative polynomials}
+A non-commutative polynomial is an expression over a finite set of variables and involving addition (which is commutative) and multiplication (which is associative but is not commutative). Moreover, multiplication distributes over addition. In this writeup we will fix the variables to be $\Sigma = \{x,y\}$. Some examples are given below
+\begin{enumerate}
+\item $p_1 \defs xyxx + xyy + xxy$
+\item $p_2 \defs 2xyxx + 3x + xxyy$
+\end{enumerate}
+Unlike a commutative polynomial, $xyx \neq xxy$ for non-commutative polynomial. Unless otherwise stated all polynomials in this writeup is non-commutative.
+
+A polynomial with no addition operation is called a monomial. For eg, $xyxx$, $xx$ are monomials. We will denote monomials by $u, v, w$. Since multiplication distributes over addition, any polynomial can be written as a sum of monomials. In other words any polynomial $P$ is equivalent to 
+\[
+P \defs \sum_{w \in S} w
+\]
+where $S$ is a \emph{multiset} of monomials.
+
+Given two matrics $M_x$ and $M_y$ of same dimension and a monomial $w$, we evaluate $w$ over $M_x$ and $M_y$ as follows:
+\begin{align*}
+\Mxy z & \defs M_z, \quad \text{   if $z \in \{x,y\}$} \\
+\Mxy {zx} & \defs \Mxy z \times M_x
+\end{align*}
+We extend this to evaluate a polynomial over $M_x$ and $M_y$.
+\[
+\Mxy P \defs \sum_{w \in S} \Mxy w
+\]
+Let $w$ be a monomial. The degree of $w$ (denoted by $\degree w$) is the length of $w$. The degree of a polynomial $P=\sum_{w \in S} w$ (denoted by $\degree P$) is the maximum of degrees of its monomials. That is 
+\[\degree P = \max \{\degree w \ \mid\ w \in S\}\]
+
+The following lemma is equivalent to Lemma 4.1 in \cite{bw}.
+\begin{lemma}
+\label{lem:ncsz}
+Let $p_1$ and $p_2$ be two polynomials where $\degree {p_1}$ and $\degree {p_2}$ are less than $d$ and such that $p_1 \neq p_2$. Let $\field$ be a finite field of size at least $3d$. Then for ``random matrices'' $M_x \in \field^{d \times d}$ and $M_y \in \field^{d \times d}$, 
+\[
+\Prob{\Mxy {p_1} \neq \Mxy {p_2}} \text{ is high}
+\]
+\end{lemma}
+
+For two different polynomials of degree less than $d$, the lemma implies that there are matrices $M_x$ and $M_y$ that ``distinguishes'' them. 
+
+We can ``view'' any finite language as a polynomial. For a language $L = \{xyxy, xxyy, xyx\}$ the corresponding polynomial is $xyxy + xxyy + xyx$. Thus the definitions evaluation of a language, degree of a language etc follows naturally from that of polynomials. Moreover, the above lemma can also be seen as talking about languages.
+
+Consider finite languages $L_1$ and $L_2$ of degree $d$. Then Lemma \ref{lem:ncsz} shows that there are lots of matrices $M_x \in \field^{d \times d}$ and $M_y \in \field^{d \times d}$ such that evaluating $L_1$ and $L_2$ over the matrices result in different matrices.
+
+Lemma \ref{lem:ncsz} can be strengthened if the number of words in a language of degree $d$ is bounded by some $\poly d$. Let us state the stronger lemma for this special case \cite{arvind}.
+
+\begin{lemma}
+\label{lem:strongncsz}
+Let $L_1$ and $L_2$ be two languages of degree $d$ and $|L_1|, |L_2| \leq \poly d$. Let us assume $L_1 \neq L_2$. Consider a finite field $\field$ of at least size $3d$. Then for ``random matrices'' $M_x \in \field^{\log d \times \log d}$ and $M_y \in \field^{\log d \times \log d}$, 
+\[
+\Prob{\Mxy {L_1} \neq \Mxy {L_2}} \text{ is high}
+\]
+\end{lemma}
+The above lemma is not really important to us. 
+
+\section{Weighted automata and matrix evaluations}
+A weighted automata consists of a matrix $M_x$ for every letter $x$, an initial vector $\sigma$ and final vector $f$. For our purpose we can view the initial and final vector to be vectors with exactly a single $1$ and the others are all zeros. A weighted automata $\wa {}$ ``runs'' over a word $w$ and returns an element of a field. We will denote this by $\wa{(w)}$. We extend this to runs over a finite language $L$ as follows.
+\[
+\wa{(L)} = \sum_{w \in L} \wa{(w)}
+\]
+
+The following lemma follows from Lemma \ref{lem:ncsz}.
+\begin{lemma}
+\label{lem:wa}
+Let $L_1$ and $L_2$ be two finite languages of degree at most $d$. Let $L_1 \neq L_2$. Consider a field $\field$ of size at least $3d$. Then there exists a weighted automata $\wa{}$ over $\field$ whose the number of states is $d$ and such that $\wa{(L_1)} \neq \wa{(L_2)}$.
+\end{lemma}
+\begin{proof}
+From Lemma \ref{lem:ncsz} we know that there is are matrices $M_x$ and $M_y$ such that $\Mxy {L_1} \neq \Mxy {L_2}$. Let these two matrices differ at the location $(i,j)$. We know construct the weighted automata where each letters $x$ and $y$ are assigned $M_x$ and $M_y$ respectively. The initial vector $\sigma$ has $1$ at the $i^{th}$ position and zero elsewhere. The final vector $f$ has $1$ at the $j^{th}$ position and zero elsewhere.
+\end{proof}
+
+\section{Some questions to think about!}
+The following questions are worth thinking about.
+\begin{enumerate}
+\item We are interested in an ``efficient'' algorithm that takes as input a DFA that accepts a finite language $L \subseteq \{x,y\}^*$ and two matrices $M_x$ and $M_y$ and returns the matrix $\Mxy L$.
+\item We are interested in an ``efficient'' algorithm that takes as input a number $n$, a DFA that accepts a language $L \subseteq \{x,y\}^*$ and two matrices $M_x$ and $M_y$ and returns the matrix $\Mxy {L \cap \Sigma^{\leq n}}$.
+\item (designing automata hashing) We can think about $\Mxy L$ as a hash function. The probability that two languages collide is low. To boost the probability, one can think about multiple matrix pairs $(M_x, M_y)$ and compute a hash vector. This hashing can be used to give a randomized equivalence checking of automata. Obviously this is not good if have to just compare two machines unless we can do all this in linear time. Recall that equivalence of automata can be done in $O(n \log n)$. A randomized linear time algorithm will be a good improvement. On the other hand, if we have to compare many automatas will hashing help?
+\item We know that with high probability $\Mxy {L_1} \neq \Mxy {L_2}$ if the languages are different. If someone gives the matrices $M_x, M_y$ and $\Mxy L$ and promises that $L$ is regular, can we return a regular language $L'$ where $\Mxy {L'} = \Mxy L$. We can boost this confidence by considering many pairs of $(M_x, M_y)$.
+\item Lemmas \ref{lem:ncsz} and \ref{lem:strongncsz} talk about all languages. Can we make a stronger claim about regular languages (at least as strong as Lemma \ref{lem:strongncsz})?
+\item Can we recast this $M_x$ and $M_y$ matrices into normal DFA. Maybe rather than taking a weight $q$ when we take letter $x$ from a state, we can go to a state which stands for $q^{th}$ element of the field. Since it is a finite field of size $3d$, the machine blows up only by that much.
+\end{enumerate}
+
+\bibliography{papers}
+\bibliographystyle{plain}
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
