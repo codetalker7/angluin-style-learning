@@ -78,6 +78,9 @@
 \newcommand{\defs}{::=}
 \newcommand{\wa}[1]{\mathcal{W}#1}
 
+%to add todos.
+\newcommand\vincent[1]{{\color{blue} [#1 --\textbf{Vincent}]}}
+
 \begin{document}
 %\maketitle
 \section{Finite fields}
@@ -98,6 +101,7 @@ where $S$ is a \emph{multiset} of monomials.
 
 Given two matrics $M_x$ and $M_y$ of same dimension and a monomial $w$, we evaluate $w$ over $M_x$ and $M_y$ as follows:
 \begin{align*}
+\Mxy \varepsilon & \defs I, \quad \text{ where $I$ is the identity matrix of right dimension}\\
 \Mxy z & \defs M_z, \quad \text{   if $z \in \{x,y\}$} \\
 \Mxy {zx} & \defs \Mxy z \times M_x
 \end{align*}
@@ -111,7 +115,11 @@ Let $w$ be a monomial. The degree of $w$ (denoted by $\degree w$) is the length 
 The following lemma is equivalent to Lemma 4.1 in \cite{bw}.
 \begin{lemma}
 \label{lem:ncsz}
+
 Let $p_1$ and $p_2$ be two polynomials where $\degree {p_1}$ and $\degree {p_2}$ are less than $d$ and such that $p_1 \neq p_2$. Let $\field$ be a finite field of size at least $3d$. Then for ``random matrices'' $M_x \in \field^{d \times d}$ and $M_y \in \field^{d \times d}$, 
+
+Let $p_1$ and $p_2$ be two polynomials where $\degree {p_1}$ and $\degree {p_2}$ are less than some $d\in\mathbb{N}$ and such that $p_1 \neq p_2$. Let $\field$ be a finite field of size at least $3d$. Then for ``random matrices'' $M_x \in \field^{d \times d}$ and $M_y \in \field^{d \times d}$, 
+
 \[
 \Prob{\Mxy {p_1} \neq \Mxy {p_2}} \text{ is high}
 \]
@@ -149,15 +157,53 @@ Let $L_1$ and $L_2$ be two finite languages of degree at most $d$. Let $L_1 \neq
 From Lemma \ref{lem:ncsz} we know that there is are matrices $M_x$ and $M_y$ such that $\Mxy {L_1} \neq \Mxy {L_2}$. Let these two matrices differ at the location $(i,j)$. We know construct the weighted automata where each letters $x$ and $y$ are assigned $M_x$ and $M_y$ respectively. The initial vector $\sigma$ has $1$ at the $i^{th}$ position and zero elsewhere. The final vector $f$ has $1$ at the $j^{th}$ position and zero elsewhere.
 \end{proof}
 
+\vincent{If I'm not wrong, we don't even need that to prove that lemma: consider $L_1 \neq L_2$, there exists a word $w \in L_1 \Delta L_2$. We just have to take the weighted automata that assigns $1$ to $w$ and $0$ to all other words to get the result (it will have at most $d$ states).
+
+Actually, what we would need is a much stronger result that I will cite below
+
+\begin{lemma}
+    Given $d\in\mathbb{N}$, there exists a field $\field$ of size at least $3d$ and a weighted automaton $\wa$ over $\field$ with $d$ states such that, for any finite languages $L_1, L_2$ of degree at most $d$, $L_1 \neq L_2 \Rightarrow \wa(L_1) \neq \wa(L_2)$.
+\end{lemma}
+
+If I'm not wrong, that is what we would need (and I'm not sure on how to use the probabilistic result for it).
+}
+
 \section{Some questions to think about!}
 The following questions are worth thinking about.
 \begin{enumerate}
 \item We are interested in an ``efficient'' algorithm that takes as input a DFA that accepts a finite language $L \subseteq \{x,y\}^*$ and two matrices $M_x$ and $M_y$ and returns the matrix $\Mxy L$.
 \item We are interested in an ``efficient'' algorithm that takes as input a number $n$, a DFA that accepts a language $L \subseteq \{x,y\}^*$ and two matrices $M_x$ and $M_y$ and returns the matrix $\Mxy {L \cap \Sigma^{\leq n}}$.
+
+\vincent{So for these first two question, the only thing I can think of now, is to use the fact it is a field, and compute the value of the DFA "layer by layer" as follows :
+\begin{itemize}
+    \item $\Mxy{\mathcal{A},0} \defs (1,0,\cdots,0)$ (supposing the first element is the initial state).
+    \item $\Mxy{\mathcal{A},\ell+1}[j] \defs \Sigma_{q_i \xrightarrow{x} q_j} \Mxy{\mathcal{A},\ell}[i] \times M_x + \Sigma_{q_i \xrightarrow{y} q_j} \Mxy{\mathcal{A},\ell}[i]$.
+\end{itemize}
+After that, to get the value of $L \cap \Sigma^n$, you take the sum of all elements of $\Mxy{\mathcal{A},n}$ which are final state. And for the full language, you take the sum over the $L \cap \Sigma^n$.
+That works because we are on a field and then we can use associativity and distributivity.
+Though of course this process seems at least quadratic («à la louche»), as in each layer, you'll have to do at most $2 \times |Q|$ products (because it's deterministic). And this $n$ times (one for each "layer»).
+
+I have no idea for now if we can do better (I'm not familiar enough with circuits, but that looks like the kind of computation for which circuits are suited).
+}
+
 \item (designing automata hashing) We can think about $\Mxy L$ as a hash function. The probability that two languages collide is low. To boost the probability, one can think about multiple matrix pairs $(M_x, M_y)$ and compute a hash vector. This hashing can be used to give a randomized equivalence checking of automata. Obviously this is not good if have to just compare two machines unless we can do all this in linear time. Recall that equivalence of automata can be done in $O(n \log n)$. A randomized linear time algorithm will be a good improvement. On the other hand, if we have to compare many automatas will hashing help?
+\vincent{On your last point, I would naively say yes: if you have your randomized linear algorithm, you'll have to run it $m^2$ times for $m$ automata, which would still be better than running $m^2$ times the $n \log n$ equivalence algorithm.Provided of course that your hashing has low collision probability, but as we discuss, it should be the case.}
+
 \item We know that with high probability $\Mxy {L_1} \neq \Mxy {L_2}$ if the languages are different. If someone gives the matrices $M_x, M_y$ and $\Mxy L$ and promises that $L$ is regular, can we return a regular language $L'$ where $\Mxy {L'} = \Mxy L$. We can boost this confidence by considering many pairs of $(M_x, M_y)$.
+\vincent{That seems badly formulated, or at least missing explicit conditions. As it is, I would say «it depends».
+For example if you look at the example we've looked through with modulus (admitting it is analogous), you see that for the counter-examples we isolated, the answer is yes, and no for the others.
+
+Or maybe what you want is you give me $M_x$, $M_y$, and a value and you want me to return a language achieving this value?
+For that, I have no intuition on how to do that for now.}
+
 \item Lemmas \ref{lem:ncsz} and \ref{lem:strongncsz} talk about all languages. Can we make a stronger claim about regular languages (at least as strong as Lemma \ref{lem:strongncsz})?
 \item Can we recast this $M_x$ and $M_y$ matrices into normal DFA. Maybe rather than taking a weight $q$ when we take letter $x$ from a state, we can go to a state which stands for $q^{th}$ element of the field. Since it is a finite field of size $3d$, the machine blows up only by that much.
+
+\vincent{On that question, that is a very good idea I think.
+If you remember, on July 14th, I mentionned that the problem with fields was we cannot do $2 \times x +1$ as a field operation (because it is not multiplication). But, as an automaton, it is actually pretty easy to do. Let me briefly explain how: Take $\mathcal{A}$ a DFA. We construct $\mathcal{A'}$ as follow : we take $p$ disjoint copies of $\mathcal{A}$ that we call $\mathcal{A}_0\cdots\mathcal{A}_{p-1}$, and for every transition $q \xrightarrow{0} q'$, we introduce the transitions $(q,m) \xrightarrow{0} (q',2\times m \mathrm{mod} p)$, and for every transition $q \xrightarrow{1} q'$, we introduce transitions $(q,m) \xrightarrow{1} (q',(2\times m + 1) \mathrm{mod} p)$.
+That allows you to easily define the set of words representing the words representing numbers equal to m modulo p (by taking as final states only those of $\mathcal{A}_m$).
+
+On an arbitrary field, you can indeed do as you mentionned pretty naturally, and same as I've described, that will allow to define the sub-languages whose image is the element you want.}
 \end{enumerate}
 
 \bibliography{papers}
