@@ -26,4 +26,8 @@ A = DFA(
     initial_state='0',
     final_states={'1'}
 )
-all_one_dfa.all_one_dfa(5, init_state=0, minimalOnly=True, no_of_primes=6, max_length=10, count=1000)
+# trying to see if a single prime separates the DFAs. Unfortunately, answer is no.
+# all_one_dfa.all_one_dfa(3, init_state=0, minimalOnly=True, prime=7, max_length=6)
+
+# call for multiple final states, n = 3
+all_one_dfa.multiple_all_one_dfa(3, init_state=0, minimalOnly=True, no_of_primes=3, max_length=6)
